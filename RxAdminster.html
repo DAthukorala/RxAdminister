@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html ng-app="RxAdminsterApp">
+<head>
+    <meta charset="utf-8" />
+    <title>Rx Adminster Window</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="scripts/RxAdminsterModule.js"></script>
+    <script src="scripts/controllers/RxAdminsterController.js"></script>
+    <script src="scripts/services/patientServices.js"></script>
+    <script src="data/dummy_json_AllPatients.js"></script>
+    <script src="data/dummy_json_SinglePatientDrugs.js"></script>
+    
+
+    <style>
+        .notAdministeredImageClass {
+            float: left;
+            position: relative;
+            width: 111px;
+            height: 163px;
+            margin: 0 5px;
+            padding: 0;
+        }
+
+            .notAdministeredImageClass img {
+                width: 110px;
+                height: 110px;
+            }
+
+            .notAdministeredImageClass h3 {
+                margin: 0;
+                padding: 3px 5px 0 0;
+                max-width: 96px;
+                overflow: hidden;
+                line-height: 1.1em;
+                font-size: .9em;
+                font-weight: normal;
+                text-transform: uppercase;
+                color: #999;
+            }
+    </style>
+</head>
+<body ng-controller="RxAdminsterController as controller">
+    <div ng-hide="controller.isDrugsMode">
+        <div class="notAdministeredImageClass" ng-repeat="patient in controller.allPatients">
+            <div ng-click="controller.fetchDrugsForPatient(patient.Id)">
+                <img src="https://demos.telerik.com/kendo-ui/content/web/foods/{{patient.Id}}.jpg" alt="{{patient.Id}}" />
+                <h3>{{patient.Name}}</h3>
+                <h3>{{patient.Room}} - {{patient.Bed}}</h3>
+            </div>
+        </div>
+    </div>
+    <div ng-hide="!controller.isDrugsMode">
+        <input type="button" value="Show all patients" ng-click="controller.showAllPatients()" style="margin-bottom:10px" />
+        <div style="margin-bottom:50px;">
+            <div class="notAdministeredImageClass">
+                <img src="https://demos.telerik.com/kendo-ui/content/web/foods/{{controller.selectedPatient.Id}}.jpg" alt="{{controller.selectedPatient.Id}}" />
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td>Name: {{controller.selectedPatient.Name}}</td>
+                        <td>DOB: {{controller.selectedPatient.DOB}}</td>
+                        <td>Room: {{controller.selectedPatient.Room}} - {{controller.selectedPatient.Bed}}</td>
+                    </tr>
+                    <tr>
+                        <td>Health plan: {{controller.selectedPatient.HealthPlan}}</td>
+                    </tr>
+                    <tr>
+                        <td>Allergies: {{controller.selectedPatient.Allergies}}</td>
+                    </tr>
+                    <tr>
+                        <td>Sugar: {{controller.selectedPatient.Sugar}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Id</th>
+                        <th>No of Units</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="drug in controller.patientDrugs">
+                    <td>{{drug.DrugName}}</td>
+                    <td>{{drug.DrugQuantity}}</td>
+                    <td>{{drug.DrugNumber}}</td>
+                    <td>{{drug.NoOfUnits}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

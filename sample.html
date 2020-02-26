@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="moduleOne">
+<head>    
+    <title>Sample Demo</title>    
+    <script>
+        //create the moduleOne
+        var X=angular.module('moduleOne',[]);
+        
+        X.controller('firstController',firstController); //first param = controller name, second param = function name
+        X.controller('secondController',secondController);
+        
+
+        //controller as syntax is used in this conrtoller
+        function firstController(){
+            
+            //assign the controller object 
+            var viewModel=this;
+            viewModel.someFunctionX=someFunctionX;
+            
+            function someFunctionX(){
+                //some code is written here
+            }
+
+        }
+
+        //$scope binding used in this conrtoller
+        function secondController($scope){
+            
+            $scope.someFunctionY=function(){
+                //some code is written here
+            }
+
+        }
+
+    </script>
+</head>
+<body>   
+    <div ng-controller="firstController as fc">  <!-- following is similar to: var fc = new firstController(); -->
+        <!-- call the function using the object  -->
+        fc.someFunctionX()
+    </div>
+    <div ng-controller="secondController">
+        <!-- to use someFunction  -->
+        someFunctionY()
+    </div>
+
+</body>
+</html>

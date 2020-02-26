@@ -1,0 +1,1 @@
+var RxAdminsterApp = angular.module('RxAdminsterApp', []);
